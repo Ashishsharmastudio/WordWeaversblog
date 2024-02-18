@@ -43,3 +43,25 @@ export const login = catchAsyncErrors(async (req, res, next)=>{
     sendToken(user, 200, "User logged in successfully", res);
 
 });
+
+export const logout = catchAsyncErrors((req, res, next)=>{
+    res
+       .status(200)
+       .cookie("token", "", { 
+        expires: new Date(Date.now()),
+        httpOnlyz: true,
+       })
+       .json({
+        success: true,
+        message:"User logged out successfully!"
+       });
+});
+
+
+export const getMyProfile = catchAsyncErrors((req, res, next)=> {
+    const user = req.user;
+    res.status(200).json({
+        success: true,
+        user,
+    });
+});
